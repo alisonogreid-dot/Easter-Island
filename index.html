@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easter Island — Vanishing Points Week 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D1117;
+  --surface: #161B22;
+  --surface2: #1C2333;
+  --border: rgba(255,255,255,0.06);
+  --text: #E6EDF3;
+  --muted: #8B949E;
+  --accent: #C9553D;
+  --accent-glow: rgba(201,85,61,0.15);
+  --teal: #2A9D8F;
+  --teal-glow: rgba(42,157,143,0.12);
+  --sand: #E9C46A;
+  --sand-glow: rgba(233,196,106,0.1);
+  --navy: #264653;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Source Sans 3', 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === HERO === */
+.hero {
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 25% 40%, rgba(233,196,106,0.07) 0%, transparent 55%),
+              radial-gradient(ellipse at 75% 60%, rgba(201,85,61,0.06) 0%, transparent 55%);
+}
+
+.hero::before {
+  content: '🗿';
+  position: absolute;
+  font-size: clamp(6rem, 18vw, 14rem);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.03;
+  pointer-events: none;
+}
+
+.hero-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 620px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === LAYOUT === */
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+section {
+  padding: 4rem 0;
+}
+
+section + section {
+  border-top: 1px solid var(--border);
+}
+
+/* === TYPOGRAPHY === */
+h2 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+h2 .num {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+h3 {
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 0.75rem;
+  margin-top: 2rem;
+}
+
+p {
+  margin-bottom: 1.2rem;
+  color: var(--muted);
+}
+
+p strong { color: var(--text); font-weight: 600; }
+
+/* === META BAR === */
+.meta-bar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.75rem;
+  margin-bottom: 2.5rem;
+  font-size: 0.92rem;
+}
+
+.meta-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  align-self: center;
+}
+
+.meta-value {
+  color: var(--muted);
+}
+
+/* === CASE STUDY BOX === */
+.case-study {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin: 2rem 0;
+}
+
+.case-study .cs-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 0.5rem;
+}
+
+.case-study .cs-title {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+/* === DEFINITION / CALLOUT BOXES === */
+.definition-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 2rem 2.5rem;
+  margin: 2rem 0;
+}
+
+.definition-box .term {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.definition-box p { color: var(--text); margin-bottom: 0.8rem; }
+
+.distinction {
+  background: linear-gradient(135deg, rgba(201,85,61,0.08), rgba(201,85,61,0.03));
+  border: 1px solid rgba(201,85,61,0.2);
+  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  margin: 2rem 0;
+}
+
+.distinction .label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.teal-callout {
+  background: linear-gradient(135deg, rgba(42,157,143,0.08), rgba(42,157,143,0.03));
+  border: 1px solid rgba(42,157,143,0.2);
+  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  margin: 2rem 0;
+}
+
+.teal-callout .label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.5rem;
+}
+
+.sand-callout {
+  background: linear-gradient(135deg, rgba(233,196,106,0.06), rgba(233,196,106,0.02));
+  border: 1px solid rgba(233,196,106,0.2);
+  border-radius: 12px;
+  padding: 2rem 2.25rem;
+  margin: 2.5rem 0;
+}
+
+.sand-callout .label {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--sand);
+  margin-bottom: 0.75rem;
+}
+
+/* === NARRATIVE CARDS === */
+.narrative-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.narrative-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.narrative-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.narrative-card.n1::before { background: var(--accent); }
+.narrative-card.n2::before { background: var(--teal); }
+.narrative-card.n3::before { background: var(--sand); }
+
+.narrative-card:hover { border-color: rgba(255,255,255,0.12); }
+.narrative-card:hover::before { opacity: 1; }
+
+.narrative-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.narrative-card .card-num {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+.narrative-card.n1 .card-num { color: var(--accent); }
+.narrative-card.n2 .card-num { color: var(--teal); }
+.narrative-card.n3 .card-num { color: var(--sand); }
+
+.narrative-card .card-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  flex: 1;
+}
+
+.narrative-card .arrow {
+  color: var(--muted);
+  font-size: 0.85rem;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+
+.narrative-card.open .arrow { transform: rotate(180deg); }
+
+.narrative-card .card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.narrative-card.open .card-body { max-height: 800px; }
+
+.card-body-inner {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+}
+
+.card-body-inner p { font-size: 0.95rem; }
+
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--teal);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.9rem;
+  background: var(--teal-glow);
+  border-radius: 6px;
+  margin: 0.25rem 0.25rem 0.25rem 0;
+  transition: background 0.2s;
+}
+
+.source-link:hover { background: rgba(42,157,143,0.2); }
+
+/* === KEYWORD CLOUD === */
+.keyword-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.keyword-bar span {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+}
+
+/* === TABLE === */
+.impact-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.impact-table thead th {
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.2rem;
+  text-align: left;
+}
+
+.impact-table tbody td {
+  padding: 0.85rem 1.2rem;
+  font-size: 0.92rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  vertical-align: top;
+}
+
+.impact-table tbody tr:last-child td { border-bottom: none; }
+.impact-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+.impact-table td strong { color: var(--text); }
+
+/* === TASK SECTION (expandable) === */
+.task-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.task-header {
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.task-header:hover { background: rgba(255,255,255,0.02); }
+
+.task-level {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.task-level.intro { background: rgba(42,157,143,0.15); color: var(--teal); }
+.task-level.main { background: rgba(201,85,61,0.15); color: var(--accent); }
+.task-level.ext { background: rgba(233,196,106,0.15); color: var(--sand); }
+
+.task-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  flex: 1;
+}
+
+.task-arrow {
+  color: var(--muted);
+  font-size: 0.85rem;
+  transition: transform 0.3s;
+}
+
+.task-section.open .task-arrow { transform: rotate(180deg); }
+
+.task-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.task-section.open .task-body { max-height: 3000px; }
+
+.task-body-inner {
+  padding: 0 2rem 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.task-body-inner h4 {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--teal);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-body-inner ol, .task-body-inner ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.task-body-inner li {
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.task-body-inner li strong { color: var(--text); }
+
+/* === SCAFFOLD === */
+.scaffold {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem 1.75rem;
+  margin: 1.25rem 0;
+}
+
+.scaffold .sc-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 0.75rem;
+}
+
+.scaffold ol li, .scaffold ul li {
+  font-size: 0.92rem;
+  margin-bottom: 0.6rem;
+}
+
+/* === FOOTER === */
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+}
+
+footer p {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 640px) {
+  .container { padding: 0 1.25rem; }
+  .hero { padding: 3rem 1.5rem; min-height: 45vh; }
+  .case-study, .sand-callout, .definition-box { padding: 1.5rem; }
+  .task-header { padding: 1.25rem 1.5rem; }
+  .task-body-inner { padding: 0 1.5rem 1.5rem; }
+  .meta-bar { grid-template-columns: 1fr; gap: 0.3rem 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-label">Vanishing Points · MYP5 I&S · Week 1 · Double 2</div>
+  <h1>Three Stories, One <em>Island</em></h1>
+  <p class="hero-sub">Same place, same evidence, three completely different villains. Today you pick a narrative and tell the story from inside it.</p>
+</header>
+
+<!-- SECTION 1: EASTER ISLAND LECTURE -->
+<section>
+  <div class="container">
+    <div class="meta-bar">
+      <span class="meta-label">Content</span>
+      <span class="meta-value">What is the role humans have played in environmental damage?</span>
+      <span class="meta-label">Skills</span>
+      <span class="meta-value">Visible thinking strategies (3, 2, 1 Bridge); narrative construction</span>
+      <span class="meta-label">Session</span>
+      <span class="meta-value">Friday — Lecture, Evidence-Finding, Storytelling</span>
+    </div>
+
+    <h2><span class="num">01</span>Easter Island: The Facts</h2>
+
+    <div class="case-study">
+      <div class="cs-label">Case Study</div>
+      <div class="cs-title">Rapa Nui (Easter Island)</div>
+      <p>Easter Island is a remote set of islands roughly 4,000 km west of Chile and 2,000 km from any other large land mass. Research suggests the island was populated by Polynesian peoples around 700 CE, contradicting earlier hypotheses that claimed the islanders originated in South America.</p>
+      <p>Due to its extreme isolation, the community was cut off from both collaboration and external threats — until Dutch explorers arrived on Easter Day 1722. This makes the island a topic of intense interest: <strong>whatever happened here, it happened largely in isolation.</strong></p>
+
+      <h3 style="margin-top: 1.5rem;">Key Elements</h3>
+      <p><strong>The Moai:</strong> Nearly 900 stone statues, some weighing up to 80 tons. How they were constructed, transported, and placed is still debated — and the answer you accept shapes which narrative you believe.</p>
+      <p><strong>Ecological Decline:</strong> By the 1600s, the island had virtually no trees. However, the island community adapted and survived — until further external factors (slave raids, disease brought by European contact) caused catastrophic population decline.</p>
+      <p><strong>The Core Question:</strong> What caused the ecological collapse? Was it the islanders' own decisions, forces beyond their control, or outsiders telling a story that suited their assumptions?</p>
+    </div>
+
+    <div class="teal-callout">
+      <div class="label">Why This Matters for This Unit</div>
+      <p>The Lorax has one narrative. The Aral Sea has a dominant narrative (Soviet decisions caused the disaster) with room for debate about blame. Easter Island goes further: <strong>the same evidence has been used to support completely contradictory stories.</strong> This is the clearest example yet of how the <em>way we tell</em> an environmental story shapes what we believe about responsibility, blame, and solutions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: THREE NARRATIVES -->
+<section>
+  <div class="container">
+    <h2><span class="num">02</span>Three Competing Narratives</h2>
+
+    <p>Each narrative below uses real evidence, but each tells a fundamentally different story — with a different villain, a different moral, and different implications for how we think about environmental damage today. Click each to expand.</p>
+
+    <div class="narrative-grid">
+
+      <!-- NARRATIVE 1 -->
+      <div class="narrative-card n1" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-num">Narrative 01</span>
+          <span class="card-title">Human Overexploitation</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Like the Aral Sea, careless and accelerated use of raw materials — palms, topsoil — led to conflict and societal collapse. The islanders destroyed their own environment through unchecked resource use, driven by competition between clans to build ever-larger Moai.</p>
+          <p><strong>The villain:</strong> Human greed and short-term thinking. The moral: civilisations that exhaust their resources destroy themselves.</p>
+          <p><strong>Key source:</strong> Jared Diamond, <em>Collapse</em> (2005) — a hugely influential book that popularised this narrative.</p>
+          <a class="source-link" href="https://www.nature.com/articles/nature.2015.17840" target="_blank">📄 Overview of the debate</a>
+        </div></div>
+      </div>
+
+      <!-- NARRATIVE 2 -->
+      <div class="narrative-card n2" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-num">Narrative 02</span>
+          <span class="card-title">Rats &amp; Gradual Decline</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Stowaway rats on the boats that brought Polynesians to Easter Island ate palm seeds and devastated the natural ability of forests to regenerate. The ecological decline was largely caused by an invasive species, not deliberate human exploitation. Meanwhile, the islanders adapted remarkably well — developing new farming techniques and maintaining a functioning society under difficult conditions.</p>
+          <p><strong>The villain:</strong> Rats (an accidental introduction), not human decisions. The moral: resilience and adaptation, not collapse.</p>
+          <a class="source-link" href="https://www.americanscientist.org/article/rethinking-the-fall-of-easter-island" target="_blank">📄 Rethinking the Fall</a>
+          <a class="source-link" href="https://www.pnas.org/doi/10.1073/pnas.1420712112" target="_blank">📄 PNAS Research</a>
+        </div></div>
+      </div>
+
+      <!-- NARRATIVE 3 -->
+      <div class="narrative-card n3" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-num">Narrative 03</span>
+          <span class="card-title">Climate &amp; External Factors</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="card-body"><div class="card-body-inner">
+          <p>Some resource problems were real but manageable — until the arrival of Europeans brought slave raids, pandemics, and colonial disruption that caused the true population catastrophe. The idea of a massive pre-contact population decline is itself a myth, shaped by colonial assumptions about "primitive" societies.</p>
+          <p><strong>The villain:</strong> Colonialism and the outsiders who imposed their own narrative onto the island's history. The moral: be careful about who gets to tell the story of a place and its people.</p>
+          <a class="source-link" href="https://www.theguardian.com/world/2024/jun/13/easter-island-population-collapse-myth-rapa-nui" target="_blank">📄 Recent research</a>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="keyword-bar">
+      <span>Soil</span>
+      <span>Biodiversity</span>
+      <span>Deforestation</span>
+      <span>Religious practices</span>
+      <span>Ancestor worship</span>
+      <span>Birdman cult</span>
+      <span>Isolation</span>
+      <span>Technology</span>
+      <span>Gene ancestry</span>
+      <span>Social structures</span>
+    </div>
+
+    <div class="distinction">
+      <div class="label">The Point</div>
+      <p>All three narratives use real evidence. All three are argued by serious researchers. But they tell <strong>completely different stories</strong> about blame, responsibility, and what we should learn. This is what it looks like when narrative shapes meaning — and it's exactly what you'll be doing in your main task today.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: TASKS -->
+<section>
+  <div class="container">
+    <h2><span class="num">03</span>Your Tasks</h2>
+
+    <!-- INTRO TASK -->
+    <div class="task-section" onclick="toggleTask(this)">
+      <div class="task-header">
+        <span class="task-level intro">Step 1</span>
+        <span class="task-title">Finding Evidence for a Claim</span>
+        <span class="task-arrow">▼</span>
+      </div>
+      <div class="task-body"><div class="task-body-inner">
+        <h4>Instructions</h4>
+        <ol>
+          <li><strong>Pick one</strong> of the three narratives above.</li>
+          <li><strong>Identify the claim</strong> and restate it as a complete sentence in your own words. (e.g. "The primary cause of Easter Island's ecological decline was…")</li>
+          <li><strong>List 3–5 pieces of evidence</strong> for this claim, drawn from the provided sources. Each piece of evidence should be a specific fact, not a general impression.</li>
+        </ol>
+
+        <div class="scaffold">
+          <div class="sc-label">This prepares you for the main task</div>
+          <p style="margin-bottom: 0;">You're not writing an essay yet — you're building your evidence base. Think of this as gathering ammunition before you tell the story.</p>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- MAIN TASK -->
+    <div class="task-section" onclick="toggleTask(this)">
+      <div class="task-header">
+        <span class="task-level main">Step 2</span>
+        <span class="task-title">Tell the Story of Your Narrative</span>
+        <span class="task-arrow">▼</span>
+      </div>
+      <div class="task-body"><div class="task-body-inner">
+        <p>This unit is about <strong>how we talk about problems</strong>. Problems told as stories have a villain, a hero, a turning point, and a moral. Your job is to commit to your chosen narrative and tell Easter Island's story <em>from inside that perspective</em>.</p>
+
+        <h4>Requirements</h4>
+        <ol>
+          <li><strong>Tell the story</strong> of your chosen narrative. Include a beginning (relevant context), rising action (what went wrong and why), climax (the point of greatest damage or conflict), and resolution (what happened next — or what should have happened).</li>
+          <li><strong>Name a clear antagonist (villain).</strong> This could be a group, a system, a species, a decision, or a set of assumptions. Make sure your description of the villain explains <em>their role</em> in the story — don't just name them.</li>
+          <li><strong>End with a resolution</strong> that makes sense within your chosen perspective. For example: "the people showed resilience and adapted" or "this new evidence challenges the damaging narratives that came before."</li>
+        </ol>
+
+        <div class="distinction">
+          <div class="label">Commit to the Perspective</div>
+          <p>This is not a balanced essay. You are writing from <strong>inside</strong> one interpretation — the way a documentary filmmaker or a passionate researcher would tell this story. You're choosing what to emphasise, what to downplay, and what emotion to create. That's not cheating. It's a rhetorical skill — and by the end of this unit, you'll have a name for it.</p>
+        </div>
+
+        <div class="scaffold">
+          <div class="sc-label">Structure suggestion</div>
+          <ol>
+            <li>Opening that establishes context and hints at the problem</li>
+            <li>The villain — who or what is responsible, and why</li>
+            <li>The rising action — how the situation got worse</li>
+            <li>Climax — the worst point</li>
+            <li>Resolution — what happened, what we should learn</li>
+          </ol>
+        </div>
+
+        <p style="margin-top: 1.25rem;">If you're stuck, you may use GenAI as brainstorming help (e.g. ask it to suggest multiple villains, and then pick one). <strong>Cite the specific chat.</strong></p>
+      </div></div>
+    </div>
+
+    <!-- EXTENSION -->
+    <div class="task-section" onclick="toggleTask(this)">
+      <div class="task-header">
+        <span class="task-level ext">Extension</span>
+        <span class="task-title">Counterfactual — If You Finish Early</span>
+        <span class="task-arrow">▼</span>
+      </div>
+      <div class="task-body"><div class="task-body-inner">
+        <p>If you finish the main task, return to the counterfactual thinking from Thursday. Choose <strong>Easter Island or The Lorax</strong> and construct an alternative outcome:</p>
+        <ol>
+          <li>Select one key turning point.</li>
+          <li>Change a critical decision or event.</li>
+          <li>Justify how and why your change could have led to a more sustainable or different outcome.</li>
+        </ol>
+        <p>This is the same process you used for the Aral Sea — but now you're applying it to a case where <strong>the turning point itself is contested</strong> depending on which narrative you believe.</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: BRIDGE WRAP-UP -->
+<section>
+  <div class="container">
+    <h2><span class="num">04</span>Bridge — Part 2</h2>
+
+    <p>Return to the 3, 2, 1 you started on Thursday. Now that you've studied the evidence and written your narrative, let's see what's changed.</p>
+
+    <div class="sand-callout">
+      <div class="label">3, 2, 1 Bridge — Closing</div>
+      <p style="color: var(--text);"><strong>3 — </strong>Identify three <em>new</em> thoughts or ideas you have about Easter Island. How do these compare to your initial thoughts from Thursday?</p>
+      <p style="color: var(--text);"><strong>2 — </strong>State two new questions you have about Easter Island. Were your initial questions answered? Did new ones emerge?</p>
+      <p style="color: var(--text);"><strong>1 — </strong>Revisit your analogy. What modern situation does Easter Island's story remind you of now? Is it the same analogy as before, or has it changed? Why?</p>
+    </div>
+
+    <div class="teal-callout">
+      <div class="label">Looking Ahead</div>
+      <p>This week you've seen environmental stories told through fiction (<em>The Lorax</em>), through a dominant historical narrative (Aral Sea), and through competing narratives (Easter Island). You've practised telling a story from <strong>inside a perspective</strong> — choosing a villain, building an argument, committing to an interpretation.</p>
+      <p>Over the coming weeks, we'll build on these skills: examining how shared resources create conflict, how data tells (and distorts) environmental stories, and how equity shapes who suffers and who decides. By the end of the unit, you'll write your own piece of committed, one-sided environmental advocacy — and you'll understand exactly what rhetorical choices you're making when you do.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Vanishing Points · MYP5 I&S · Mrs. Øgreid</p>
+</footer>
+
+<script>
+function toggleCard(el) {
+  el.classList.toggle('open');
+}
+
+function toggleTask(el) {
+  document.querySelectorAll('.task-section').forEach(t => {
+    if (t !== el) t.classList.remove('open');
+  });
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
